@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>GOAT FC LINEUP</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+body{
+margin:0;
+font-family:'Oswald',sans-serif;
+background:#020617;
+color:white;
+text-align:center;
+}
+
+.header{
+padding:15px;
+font-size:28px;
+color:#a3e635;
+}
+
+.field{
+width:850px;
+height:900px;
+margin:auto;
+background:linear-gradient(#3f6212,#65a30d);
+border-radius:20px;
+position:relative;
+}
+
+/* PLAYER */
+.player{
+position:absolute;
+transform:translate(-50%,-50%);
+text-align:center;
+}
+
+.circle{
+width:55px;
+height:55px;
+border-radius:50%;
+overflow:hidden;
+border:2px solid white;
+}
+
+.circle img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+.number{
+position:absolute;
+top:-8px;
+right:-8px;
+background:#000;
+color:#fff;
+font-size:12px;
+padding:2px 6px;
+border-radius:10px;
+}
+
+.name{
+font-size:11px;
+margin-top:3px;
+}
+
+/* TEAM COLOR */
+.A .circle{ border-color:#38bdf8; }
+.B .circle{ border-color:#f97316; }
+
+/* POSITION */
+.A.GK{ top:90%; left:50%; }
+.A.CB{ top:75%; }
+.A.CB.left{ left:30%; }
+.A.CB.right{ left:70%; }
+
+.A.CMF{ top:55%; }
+.A.CMF.left{ left:30%; }
+.A.CMF.right{ left:70%; }
+
+.A.CF{ top:25%; left:50%; }
+
+.B.GK{ top:10%; left:50%; }
+.B.CB{ top:25%; }
+.B.CB.left{ left:30%; }
+.B.CB.right{ left:70%; }
+
+.B.CMF{ top:45%; }
+.B.CMF.left{ left:30%; }
+.B.CMF.right{ left:70%; }
+
+.B.CF{ top:75%; left:50%; }
+
+</style>
+</head>
+
+<body>
+
+<div class="header">GOAT FC LINEUP</div>
+<div class="field" id="field"></div>
+
+<script>
+
+// ✅ তোমার working CSV link
+const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS4KNzILRuiffmK9n0tOerjpaCJ6Y6MJ8-lW1IsJBefBkXWak_wW_88YEo7CazvuvxJZgD3SjEHlNu_/pub?gid=1301001241&single=true&output=csv";
+
+fetch(url)
+.then(res => res.text())
+.then(data => {
+
+  const rows = data.split("\n").slice(1);
+
+  let countA = {};
+  let countB = {};
+
+  rows.forEach(row => {
+
+    const col = row.split(",");
+
+    const name = col[0];
+    const status = col[3];
+    const image = col[6];
+    const manage = col[8];
+    const position = col[10];
+    const lineup = col[12];
+    const teamCode = col[13];
+    const number = col[14];
+
+    if(lineup !== "Yes") return;
+    if(status !== "Available") return;
+    if(manage !== "YES") return;
+
+    let side = teamCode === "A" ? "A" : "B";
+
+    let posIndex;
+    if(side === "A"){
+      countA[position] = (countA[position] || 0) + 1;
+      posIndex = countA[position];
+    }else{
+      countB[position] = (countB[position] || 0) + 1;
+      posIndex = countB[position];
+    }
+
+    let extra = posIndex === 1 ? "left" : "right";
+
+    // 🔥 IMAGE FIX
+    let img = "";
+    if(image.includes("drive.google.com")){
+      let id = image.split("/d/")[1].split("/")[0];
+      img = "https://drive.google.com/uc?export=view&id=" + id;
+    }else{
+      img = image;
+    }
+
+    const div = document.createElement("div");
+    div.className = `player ${side} ${position} ${extra}`;
+
+    div.innerHTML = `
+      <div class="circle">
+        <img src="${img}">
+      </div>
+      <div class="number">${number}</div>
+      <div class="name">${name}</div>
+    `;
+
+    document.getElementById("field").appendChild(div);
+
+  });
+
+});
+</script>
+
+</body>
+</html>
