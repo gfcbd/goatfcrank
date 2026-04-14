@@ -13,9 +13,8 @@
 body{
 margin:0;
 font-family:'Orbitron',sans-serif;
-background:radial-gradient(circle at top,#020617,#0f172a);
+background:linear-gradient(135deg,#020617,#0f172a);
 color:white;
-overflow-x:hidden;
 }
 
 /* ===== NAVBAR ===== */
@@ -26,27 +25,11 @@ align-items:center;
 padding:12px 20px;
 background:rgba(15,23,42,0.8);
 backdrop-filter:blur(10px);
-}
-
-.logo{
-display:flex;
-align-items:center;
-gap:10px;
-}
-
-.logo img{
-height:45px;
-filter:drop-shadow(0 0 10px #7c3aed);
-}
-
-.logo span{
-font-weight:700;
-font-size:22px;
-text-shadow:0 0 15px #8b5cf6;
+flex-wrap:wrap;
 }
 
 .nav-links a{
-margin:10px;
+margin:8px;
 color:#cbd5f5;
 text-decoration:none;
 transition:.3s;
@@ -57,10 +40,26 @@ color:#a78bfa;
 text-shadow:0 0 10px #a78bfa;
 }
 
-/* ===== HERO SLIDER ===== */
+/* ===== LOGO ===== */
+.logo{
+display:flex;
+align-items:center;
+gap:10px;
+font-size:22px;
+font-weight:700;
+color:white;
+}
+
+.logo img{
+height:45px;
+filter:drop-shadow(0 0 10px #7c3aed);
+}
+
+/* ===== HERO ADS ===== */
 .hero{
 position:relative;
-height:320px;
+width:100%;
+height:300px;
 overflow:hidden;
 }
 
@@ -68,14 +67,10 @@ overflow:hidden;
 position:absolute;
 width:100%;
 height:100%;
-opacity:0;
-transition:all 1s ease;
+display:none;
 }
 
-.ad-box.active{
-opacity:1;
-transform:scale(1.05);
-}
+.ad-box.active{display:block;}
 
 .ad-box img{
 width:100%;
@@ -84,6 +79,7 @@ object-fit:cover;
 filter:brightness(0.5);
 }
 
+/* OVERLAY */
 .ad-content{
 position:absolute;
 top:50%;
@@ -101,67 +97,64 @@ margin-top:10px;
 padding:10px 25px;
 background:linear-gradient(45deg,#7c3aed,#ec4899);
 border-radius:30px;
-color:white;
 text-decoration:none;
+color:white;
 }
 
-/* ===== SECTION ===== */
+/* ===== QUICK ===== */
 .section{
 text-align:center;
-padding:40px 10px;
+padding:30px 10px;
 }
 
-.section h2{
-margin-bottom:20px;
-text-shadow:0 0 15px #8b5cf6;
-}
-
-/* ===== GRID ===== */
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+.quick-container{
+display:flex;
+justify-content:center;
+flex-wrap:wrap;
 gap:15px;
-max-width:900px;
-margin:auto;
 }
 
-/* ===== CARD ===== */
-.card{
-background:rgba(255,255,255,0.05);
+.quick-box{
+width:160px;
 padding:20px;
+background:rgba(255,255,255,0.05);
+border-radius:15px;
+cursor:pointer;
+transition:.3s;
+}
+
+.quick-box:hover{
+transform:scale(1.05);
+box-shadow:0 0 20px #8b5cf6;
+}
+
+/* ===== CHAMPIONS ===== */
+.champ-container{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:15px;
+}
+
+.champ{
+width:160px;
+background:rgba(255,255,255,0.05);
+padding:10px;
 border-radius:15px;
 transition:.3s;
-cursor:pointer;
-position:relative;
-overflow:hidden;
 }
 
-.card::before{
-content:"";
-position:absolute;
-inset:0;
-background:linear-gradient(120deg,transparent,rgba(139,92,246,0.3),transparent);
-opacity:0;
-transition:.3s;
+.champ:hover{
+transform:scale(1.05);
+box-shadow:0 0 20px #ec4899;
 }
 
-.card:hover::before{
-opacity:1;
-}
-
-.card:hover{
-transform:translateY(-8px) scale(1.05);
-box-shadow:0 0 25px #8b5cf6;
-}
-
-/* ===== CHAMP ===== */
 .champ img{
 width:100%;
 border-radius:10px;
-margin-bottom:8px;
 }
 
-/* ===== DESC ===== */
+/* ===== DESCRIPTION ===== */
 .desc{
 max-width:700px;
 margin:20px auto;
@@ -170,25 +163,25 @@ font-size:14px;
 }
 
 /* ===== SOCIAL ===== */
+.social{
+text-align:center;
+padding:30px;
+}
+
 .social a{
 display:inline-block;
 margin:5px;
 padding:10px 15px;
-background:linear-gradient(45deg,#06b6d4,#3b82f6);
+background:#0ea5e9;
 border-radius:8px;
 text-decoration:none;
 color:white;
-transition:.3s;
-}
-
-.social a:hover{
-transform:scale(1.1);
-box-shadow:0 0 15px #06b6d4;
 }
 
 /* ===== MOBILE ===== */
 @media(max-width:600px){
-.hero{height:230px;}
+.hero{height:220px;}
+.logo span{font-size:18px;}
 }
 
 </style>
@@ -198,62 +191,59 @@ box-shadow:0 0 15px #06b6d4;
 
 <!-- NAVBAR -->
 <div class="navbar">
+
 <div class="logo">
 <img src="https://i.imgur.com/LY3Bb9m.png">
-<span>GOAT FC</span>
+<span class="glow">GOAT FC</span>
 </div>
 
 <div class="nav-links">
-<a href="#">Rules</a>
-<a href="#">About</a>
-<a href="#">Contact</a>
-<a href="#">Login</a>
-</div>
+<a href="#" id="rules">Rules</a>
+<a href="#" id="about">About Us</a>
+<a href="#" id="contact">Contact</a>
+<a href="#" id="login">Login</a>
 </div>
 
-<!-- HERO -->
+</div>
+
+<!-- ADS -->
 <div class="hero"></div>
 
-<!-- QUICK -->
+<!-- QUICK LINKS -->
 <div class="section">
-<h2>CLUB ZONE</h2>
-<div class="grid quick-container"></div>
+<h2 class="glow">CLUB • ELITE • TOURNAMENT</h2>
+<div class="quick-container"></div>
 </div>
 
 <!-- CHAMPIONS -->
 <div class="section">
-<h2>CHAMPIONS</h2>
-<div class="grid champ-container"></div>
+<h2 class="glow">CHAMPIONS</h2>
+<div class="champ-container"></div>
 
 <div class="desc">
-🏆 Legends are not born — they are made through victory.  
-Every champion here represents the highest level of skill and dedication. Will you be the next name on this wall?
+🏆 These champions are not just winners — they are the pride of Goat FC.  
+Each victory tells a story of dedication, skill, and dominance.  
+Rise, compete, and etch your name among legends.
 </div>
+
 </div>
 
 <!-- SOCIAL -->
-<div class="section social">
-<h2>JOIN WITH US</h2>
+<div class="social">
+<h2 class="glow">JOIN COMMUNITY</h2>
 </div>
 
 <script>
 
-const sheetID="1ZoXNHa5sYiP_HaPRyL5RDML7l3kC2IaGuQCAmYkERf8";
+const sheetID = "1ZoXNHa5sYiP_HaPRyL5RDML7l3kC2IaGuQCAmYkERf8";
 
 /* ===== ADS ===== */
-let current=0;
-let ads=[];
-
 fetch(`https://opensheet.elk.sh/${sheetID}/ADS`)
 .then(res=>res.json())
 .then(data=>{
-ads=data;
-renderAds();
-});
-
-function renderAds(){
-let hero=document.querySelector(".hero");
-hero.innerHTML=ads.map((ad,i)=>`
+let html="";
+data.forEach((ad,i)=>{
+html+=`
 <div class="ad-box ${i==0?'active':''}">
 <img src="${ad.image}">
 <div class="ad-content">
@@ -261,84 +251,62 @@ hero.innerHTML=ads.map((ad,i)=>`
 <p>${ad.desc}</p>
 <a href="${ad.link}" class="btn">${ad.button}</a>
 </div>
-</div>`).join("");
-
+</div>`;
+});
+document.querySelector(".hero").innerHTML=html;
 startSlider();
-addDrag();
-}
+});
 
-/* AUTO SLIDE */
 function startSlider(){
+let ads=document.querySelectorAll(".ad-box");
+let i=0;
 setInterval(()=>{
-changeSlide(1);
-},6500);
+ads[i].classList.remove("active");
+i=(i+1)%ads.length;
+ads[i].classList.add("active");
+},4000);
 }
 
-/* CHANGE */
-function changeSlide(dir){
-let boxes=document.querySelectorAll(".ad-box");
-boxes[current].classList.remove("active");
-current=(current+dir+boxes.length)%boxes.length;
-boxes[current].classList.add("active");
-}
-
-/* DRAG CONTROL */
-function addDrag(){
-let startX=0;
-
-document.querySelector(".hero").addEventListener("mousedown",(e)=>{
-startX=e.clientX;
-});
-
-document.querySelector(".hero").addEventListener("mouseup",(e)=>{
-let diff=e.clientX-startX;
-if(diff>50) changeSlide(-1);
-if(diff<-50) changeSlide(1);
-});
-
-/* MOBILE TOUCH */
-document.querySelector(".hero").addEventListener("touchstart",(e)=>{
-startX=e.touches[0].clientX;
-});
-
-document.querySelector(".hero").addEventListener("touchend",(e)=>{
-let diff=e.changedTouches[0].clientX-startX;
-if(diff>50) changeSlide(-1);
-if(diff<-50) changeSlide(1);
-});
-}
-
-/* LINKS */
+/* ===== LINKS ===== */
 fetch(`https://opensheet.elk.sh/${sheetID}/LINKS`)
 .then(res=>res.json())
 .then(data=>{
-document.querySelector(".quick-container").innerHTML=
-data.map(l=>`
-<div class="card" onclick="window.location='${l.link}'">
-<h3>${l.icon}</h3>
-<p>${l.title}</p>
-</div>`).join("");
+let html="";
+data.forEach(l=>{
+html+=`
+<div class="quick-box" onclick="window.location='${l.link}'">
+${l.icon}
+<h4>${l.title}</h4>
+</div>`;
+});
+document.querySelector(".quick-container").innerHTML=html;
 });
 
-/* CHAMPIONS */
+/* ===== CHAMPIONS ===== */
 fetch(`https://opensheet.elk.sh/${sheetID}/CHAMPIONS`)
 .then(res=>res.json())
 .then(data=>{
-document.querySelector(".champ-container").innerHTML=
-data.map(c=>`
-<div class="card champ">
+let html="";
+data.forEach(c=>{
+html+=`
+<div class="champ">
 <img src="${c.image}">
 <h4>${c.title}</h4>
 <p>${c.subtitle}</p>
-</div>`).join("");
+</div>`;
+});
+document.querySelector(".champ-container").innerHTML=html;
 });
 
-/* SOCIAL */
+/* ===== SOCIAL ===== */
 fetch(`https://opensheet.elk.sh/${sheetID}/SOCIAL`)
 .then(res=>res.json())
 .then(data=>{
-document.querySelector(".social").innerHTML+=
-data.map(s=>`<a href="${s.link}" target="_blank">${s.name}</a>`).join("");
+let html="";
+data.forEach(s=>{
+html+=`<a href="${s.link}" target="_blank">${s.name}</a>`;
+});
+document.querySelector(".social").innerHTML+=html;
 });
 
 </script>
