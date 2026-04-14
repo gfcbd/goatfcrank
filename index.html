@@ -19,6 +19,7 @@ color:white;
 overflow-x:hidden;
 }
 
+/* ===== NAVBAR ===== */
 .navbar{
 display:flex;
 justify-content:space-between;
@@ -67,6 +68,7 @@ color:#a78bfa;
 text-shadow:0 0 10px #a78bfa;
 }
 
+/* ===== HERO ===== */
 .hero{
 position:relative;
 height:240px;
@@ -81,9 +83,7 @@ opacity:0;
 transition:all 0.8s ease;
 }
 
-.ad-box.active{
-opacity:1;
-}
+.ad-box.active{opacity:1;}
 
 .ad-box img{
 width:100%;
@@ -124,6 +124,7 @@ text-decoration:none;
 color:white;
 }
 
+/* ===== ARROWS ===== */
 .arrow{
 position:absolute;
 top:50%;
@@ -141,6 +142,7 @@ border-radius:50%;
 .arrow.left{left:8px;}
 .arrow.right{right:8px;}
 
+/* ===== SECTION ===== */
 .section{
 text-align:center;
 padding:25px 10px;
@@ -156,6 +158,7 @@ color:#a78bfa;
 text-shadow:0 0 10px #7c3aed;
 }
 
+/* ===== GRID ===== */
 .grid{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
@@ -165,6 +168,7 @@ max-width:900px;
 margin:auto;
 }
 
+/* ===== CARD BASE ===== */
 .card{
 background:rgba(255,255,255,0.05);
 padding:12px;
@@ -172,6 +176,37 @@ border-radius:12px;
 transition:.3s;
 cursor:pointer;
 text-align:center;
+position:relative;
+}
+
+/* ===== GOLD BORDER (CLUB HUB) ===== */
+.quick-container .card::before{
+content:"";
+position:absolute;
+inset:0;
+border-radius:12px;
+padding:1px;
+background:linear-gradient(45deg,#FFD700,#FFA500);
+-webkit-mask:
+linear-gradient(#000 0 0) content-box,
+linear-gradient(#000 0 0);
+-webkit-mask-composite:xor;
+mask-composite:exclude;
+}
+
+/* ===== BLUE BORDER (CHAMPIONS) ===== */
+.champ-container .card::before{
+content:"";
+position:absolute;
+inset:0;
+border-radius:12px;
+padding:1px;
+background:linear-gradient(45deg,#38bdf8,#6366f1);
+-webkit-mask:
+linear-gradient(#000 0 0) content-box,
+linear-gradient(#000 0 0);
+-webkit-mask-composite:xor;
+mask-composite:exclude;
 }
 
 .card:hover{
@@ -189,10 +224,9 @@ width:100%;
 border-radius:10px;
 }
 
-/* ===== UPDATED WINNERS ZONE (SMALL + TIGHT) ===== */
 .champ h4{
 font-size:11px;
-margin:3px 0 2px 0;
+margin:3px 0 2px;
 }
 
 .champ p{
@@ -207,9 +241,9 @@ max-width:700px;
 margin:10px auto;
 font-size:12px;
 color:#cbd5f5;
-line-height:1.5;
 }
 
+/* ===== SOCIAL ===== */
 .social a{
 display:inline-block;
 margin:5px;
@@ -221,6 +255,25 @@ color:white;
 text-decoration:none;
 }
 
+/* ===== FOOTER ===== */
+.footer{
+text-align:center;
+padding:15px;
+font-size:12px;
+color:#94a3b8;
+border-top:1px solid rgba(255,255,255,0.1);
+}
+
+.footer a{
+color:#a78bfa;
+text-decoration:none;
+}
+
+.footer a:hover{
+text-shadow:0 0 10px #a78bfa;
+}
+
+/* ===== MOBILE ===== */
 @media(max-width:600px){
 .hero{height:200px;}
 .logo span{font-size:14px;}
@@ -235,7 +288,6 @@ text-decoration:none;
 <body>
 
 <div class="navbar">
-
 <div class="logo">
 <img src="https://i.imgur.com/LY3Bb9m.png">
 <span>GOAT FC</span>
@@ -247,7 +299,6 @@ text-decoration:none;
 <a href="https://www.facebook.com/goatfc.official">Contact</a>
 <a href="https://forms.gle/HnRQHSFgwpQXc81F9">Registration</a>
 </div>
-
 </div>
 
 <div class="hero">
@@ -262,16 +313,21 @@ text-decoration:none;
 
 <div class="section" style="margin-top:-10px;">
 <h2 class="glow">Hall of Champions</h2>
-
 <div class="grid champ-container"></div>
 
 <div class="desc">
-🏆 This zone represents champions, top scorers, and elite performers of Goat FC. Every card here tells a story of dominance, skill, and consistency.
+🏆 This zone represents champions, top scorers, and elite performers of Goat FC.
 </div>
 </div>
 
 <div class="section social">
 <h2 class="glow">JOIN WITH US</h2>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+Design By 
+<a href="#" target="_blank">Md Rashedul Hasan</a>
 </div>
 
 <script>
@@ -311,12 +367,11 @@ setInterval(()=>changeSlide(1),7000);
 function changeSlide(dir){
 let boxes=document.querySelectorAll(".ad-box");
 boxes[current].classList.remove("active");
-
 current=(current+dir+boxes.length)%boxes.length;
-
 boxes[current].classList.add("active");
 }
 
+/* LINKS */
 fetch(`https://opensheet.elk.sh/${sheetID}/LINKS`)
 .then(r=>r.json())
 .then(data=>{
@@ -329,6 +384,7 @@ data.map(l=>`
 `).join("");
 });
 
+/* CHAMPIONS */
 fetch(`https://opensheet.elk.sh/${sheetID}/CHAMPIONS`)
 .then(r=>r.json())
 .then(data=>{
@@ -342,6 +398,7 @@ data.map(c=>`
 `).join("");
 });
 
+/* SOCIAL */
 fetch(`https://opensheet.elk.sh/${sheetID}/SOCIAL`)
 .then(r=>r.json())
 .then(data=>{
