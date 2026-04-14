@@ -9,30 +9,59 @@
 
 <style>
 
-/* ===== GLOBAL ===== */
+/* ===== GLOBAL FIX (MOBILE SAFE) ===== */
+*{box-sizing:border-box;}
+
 body{
 margin:0;
 font-family:'Orbitron',sans-serif;
-background:linear-gradient(135deg,#020617,#0f172a);
+background:radial-gradient(circle at top,#020617,#0f172a);
 color:white;
+overflow-x:hidden;
 }
 
-/* ===== NAVBAR ===== */
+/* ===== NAVBAR FIX ===== */
 .navbar{
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:12px 20px;
-background:rgba(15,23,42,0.8);
-backdrop-filter:blur(10px);
+padding:10px 12px;
 flex-wrap:wrap;
+background:rgba(15,23,42,0.85);
+backdrop-filter:blur(10px);
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:8px;
+min-width:160px;
+}
+
+.logo img{
+height:38px;
+filter:drop-shadow(0 0 10px #7c3aed);
+}
+
+.logo span{
+font-size:16px;
+font-weight:700;
+white-space:nowrap;
+}
+
+.nav-links{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:8px;
 }
 
 .nav-links a{
-margin:8px;
+font-size:12px;
+padding:6px 8px;
 color:#cbd5f5;
 text-decoration:none;
-transition:.3s;
+white-space:nowrap;
 }
 
 .nav-links a:hover{
@@ -40,26 +69,10 @@ color:#a78bfa;
 text-shadow:0 0 10px #a78bfa;
 }
 
-/* ===== LOGO ===== */
-.logo{
-display:flex;
-align-items:center;
-gap:10px;
-font-size:22px;
-font-weight:700;
-color:white;
-}
-
-.logo img{
-height:45px;
-filter:drop-shadow(0 0 10px #7c3aed);
-}
-
 /* ===== HERO ADS ===== */
 .hero{
 position:relative;
-width:100%;
-height:300px;
+height:240px;
 overflow:hidden;
 }
 
@@ -67,88 +80,121 @@ overflow:hidden;
 position:absolute;
 width:100%;
 height:100%;
-display:none;
+opacity:0;
+transition:all 0.8s ease;
 }
 
-.ad-box.active{display:block;}
+.ad-box.active{
+opacity:1;
+}
 
 .ad-box img{
 width:100%;
 height:100%;
 object-fit:cover;
-filter:brightness(0.5);
+filter:brightness(0.45);
 }
 
-/* OVERLAY */
+/* AD TEXT FIX (SMALL + CENTER) */
 .ad-content{
 position:absolute;
 top:50%;
 left:50%;
 transform:translate(-50%,-50%);
 text-align:center;
+width:90%;
 }
 
-.glow{
-text-shadow:0 0 10px #8b5cf6,0 0 30px #7c3aed;
+.ad-content h1{
+font-size:18px;
+margin:4px 0;
+text-shadow:0 0 10px #8b5cf6;
+}
+
+.ad-content p{
+font-size:12px;
+margin:5px 0;
+color:#cbd5f5;
 }
 
 .btn{
-margin-top:10px;
-padding:10px 25px;
+display:inline-block;
+margin-top:6px;
+padding:7px 16px;
+font-size:12px;
 background:linear-gradient(45deg,#7c3aed,#ec4899);
-border-radius:30px;
+border-radius:25px;
 text-decoration:none;
 color:white;
 }
 
-/* ===== QUICK ===== */
+/* ===== ARROW BUTTONS ===== */
+.arrow{
+position:absolute;
+top:50%;
+transform:translateY(-50%);
+background:rgba(0,0,0,0.4);
+border:none;
+color:white;
+font-size:18px;
+padding:6px 10px;
+cursor:pointer;
+z-index:10;
+border-radius:50%;
+}
+
+.arrow.left{left:8px;}
+.arrow.right{right:8px;}
+
+/* ===== SECTION ===== */
 .section{
 text-align:center;
-padding:30px 10px;
+padding:25px 10px;
 }
 
-.quick-container{
-display:flex;
-justify-content:center;
-flex-wrap:wrap;
-gap:15px;
+/* ===== TITLE STYLE ===== */
+.section h2{
+margin-bottom:15px;
+font-size:16px;
 }
 
-.quick-box{
-width:160px;
-padding:20px;
+.glow{
+color:#a78bfa;
+text-shadow:0 0 10px #7c3aed;
+}
+
+/* ===== GRID ===== */
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+gap:10px;
+padding:0 10px;
+max-width:900px;
+margin:auto;
+}
+
+/* ===== CARD ===== */
+.card{
 background:rgba(255,255,255,0.05);
-border-radius:15px;
-cursor:pointer;
+padding:12px;
+border-radius:12px;
 transition:.3s;
+cursor:pointer;
+text-align:center;
 }
 
-.quick-box:hover{
+.card:hover{
 transform:scale(1.05);
 box-shadow:0 0 20px #8b5cf6;
 }
 
-/* ===== CHAMPIONS ===== */
-.champ-container{
-display:flex;
-flex-wrap:wrap;
-justify-content:center;
-gap:15px;
+/* ICON CENTER */
+.card h3,.card h4,.card p{
+margin:4px 0;
+text-align:center;
 }
 
-.champ{
-width:160px;
-background:rgba(255,255,255,0.05);
-padding:10px;
-border-radius:15px;
-transition:.3s;
-}
-
-.champ:hover{
-transform:scale(1.05);
-box-shadow:0 0 20px #ec4899;
-}
-
+/* ===== CHAMP IMAGE ===== */
 .champ img{
 width:100%;
 border-radius:10px;
@@ -157,31 +203,31 @@ border-radius:10px;
 /* ===== DESCRIPTION ===== */
 .desc{
 max-width:700px;
-margin:20px auto;
+margin:10px auto;
+font-size:12px;
 color:#cbd5f5;
-font-size:14px;
+line-height:1.5;
 }
 
 /* ===== SOCIAL ===== */
-.social{
-text-align:center;
-padding:30px;
-}
-
 .social a{
 display:inline-block;
 margin:5px;
-padding:10px 15px;
-background:#0ea5e9;
+padding:8px 12px;
+font-size:12px;
+background:linear-gradient(45deg,#06b6d4,#3b82f6);
 border-radius:8px;
-text-decoration:none;
 color:white;
+text-decoration:none;
 }
 
-/* ===== MOBILE ===== */
+/* ===== MOBILE FIXES ===== */
 @media(max-width:600px){
-.hero{height:220px;}
-.logo span{font-size:18px;}
+.hero{height:200px;}
+.logo span{font-size:14px;}
+.nav-links a{font-size:11px;padding:5px;}
+.ad-content h1{font-size:15px;}
+.ad-content p{font-size:11px;}
 }
 
 </style>
@@ -194,119 +240,128 @@ color:white;
 
 <div class="logo">
 <img src="https://i.imgur.com/LY3Bb9m.png">
-<span class="glow">GOAT FC</span>
+<span>GOAT FC</span>
 </div>
 
 <div class="nav-links">
-<a href="#" id="rules">Rules</a>
-<a href="#" id="about">About Us</a>
-<a href="#" id="contact">Contact</a>
-<a href="#" id="login">Login</a>
+<a href="#">Rules</a>
+<a href="#">About</a>
+<a href="#">Contact</a>
+<a href="#">Login</a>
 </div>
 
 </div>
 
 <!-- ADS -->
-<div class="hero"></div>
-
-<!-- QUICK LINKS -->
-<div class="section">
-<h2 class="glow">CLUB • ELITE • TOURNAMENT</h2>
-<div class="quick-container"></div>
+<div class="hero">
+<button class="arrow left" onclick="changeSlide(-1)">‹</button>
+<button class="arrow right" onclick="changeSlide(1)">›</button>
 </div>
 
-<!-- CHAMPIONS -->
+<!-- CLUB ZONE -->
 <div class="section">
-<h2 class="glow">CHAMPIONS</h2>
-<div class="champ-container"></div>
+<h2 class="glow">CLUB ZONE</h2>
+<div class="grid quick-container"></div>
+</div>
+
+<!-- WINNERS SECTION -->
+<div class="section" style="margin-top:-10px;">
+<h2 class="glow">WINNERS ZONE</h2>
+
+<div class="grid champ-container"></div>
 
 <div class="desc">
-🏆 These champions are not just winners — they are the pride of Goat FC.  
-Each victory tells a story of dedication, skill, and dominance.  
-Rise, compete, and etch your name among legends.
+🏆 This zone represents champions, top scorers, and elite performers of Goat FC.  
+Every card here tells a story of dominance, skill, and consistency.
 </div>
-
 </div>
 
 <!-- SOCIAL -->
-<div class="social">
+<div class="section social">
 <h2 class="glow">JOIN COMMUNITY</h2>
 </div>
 
 <script>
 
-const sheetID = "1ZoXNHa5sYiP_HaPRyL5RDML7l3kC2IaGuQCAmYkERf8";
+const sheetID="1ZoXNHa5sYiP_HaPRyL5RDML7l3kC2IaGuQCAmYkERf8";
+
+let ads=[];
+let current=0;
 
 /* ===== ADS ===== */
 fetch(`https://opensheet.elk.sh/${sheetID}/ADS`)
-.then(res=>res.json())
+.then(r=>r.json())
 .then(data=>{
-let html="";
-data.forEach((ad,i)=>{
-html+=`
+ads=data;
+renderAds();
+startAuto();
+});
+
+function renderAds(){
+let hero=document.querySelector(".hero");
+
+hero.innerHTML+=ads.map((ad,i)=>`
 <div class="ad-box ${i==0?'active':''}">
 <img src="${ad.image}">
 <div class="ad-content">
-<h1 class="glow">${ad.title}</h1>
+<h1>${ad.title}</h1>
 <p>${ad.desc}</p>
-<a href="${ad.link}" class="btn">${ad.button}</a>
+<a class="btn" href="${ad.link}">${ad.button}</a>
 </div>
-</div>`;
-});
-document.querySelector(".hero").innerHTML=html;
-startSlider();
-});
-
-function startSlider(){
-let ads=document.querySelectorAll(".ad-box");
-let i=0;
-setInterval(()=>{
-ads[i].classList.remove("active");
-i=(i+1)%ads.length;
-ads[i].classList.add("active");
-},4000);
+</div>
+`).join("");
 }
 
-/* ===== LINKS ===== */
+/* AUTO SLIDE */
+function startAuto(){
+setInterval(()=>changeSlide(1),7000);
+}
+
+/* CHANGE SLIDE */
+function changeSlide(dir){
+let boxes=document.querySelectorAll(".ad-box");
+boxes[current].classList.remove("active");
+
+current=(current+dir+boxes.length)%boxes.length;
+
+boxes[current].classList.add("active");
+}
+
+/* LINKS */
 fetch(`https://opensheet.elk.sh/${sheetID}/LINKS`)
-.then(res=>res.json())
+.then(r=>r.json())
 .then(data=>{
-let html="";
-data.forEach(l=>{
-html+=`
-<div class="quick-box" onclick="window.location='${l.link}'">
-${l.icon}
+document.querySelector(".quick-container").innerHTML=
+data.map(l=>`
+<div class="card" onclick="window.location='${l.link}'">
+<h3>${l.icon}</h3>
 <h4>${l.title}</h4>
-</div>`;
-});
-document.querySelector(".quick-container").innerHTML=html;
+</div>
+`).join("");
 });
 
-/* ===== CHAMPIONS ===== */
+/* CHAMPIONS / WINNERS */
 fetch(`https://opensheet.elk.sh/${sheetID}/CHAMPIONS`)
-.then(res=>res.json())
+.then(r=>r.json())
 .then(data=>{
-let html="";
-data.forEach(c=>{
-html+=`
-<div class="champ">
+document.querySelector(".champ-container").innerHTML=
+data.map(c=>`
+<div class="card champ">
 <img src="${c.image}">
 <h4>${c.title}</h4>
 <p>${c.subtitle}</p>
-</div>`;
-});
-document.querySelector(".champ-container").innerHTML=html;
+</div>
+`).join("");
 });
 
-/* ===== SOCIAL ===== */
+/* SOCIAL */
 fetch(`https://opensheet.elk.sh/${sheetID}/SOCIAL`)
-.then(res=>res.json())
+.then(r=>r.json())
 .then(data=>{
-let html="";
-data.forEach(s=>{
-html+=`<a href="${s.link}" target="_blank">${s.name}</a>`;
-});
-document.querySelector(".social").innerHTML+=html;
+document.querySelector(".social").innerHTML+=
+data.map(s=>`
+<a href="${s.link}" target="_blank">${s.name}</a>
+`).join("");
 });
 
 </script>
