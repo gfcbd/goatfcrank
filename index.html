@@ -148,14 +148,20 @@ text-align:center;
 padding:25px 10px;
 }
 
+/* ===== TITLE ANIMATION ===== */
 .section h2{
 margin-bottom:15px;
 font-size:16px;
+animation:glowPulse 2.5s infinite alternate;
+}
+
+@keyframes glowPulse{
+0%{text-shadow:0 0 5px #7c3aed;}
+100%{text-shadow:0 0 20px #a78bfa;}
 }
 
 .glow{
 color:#a78bfa;
-text-shadow:0 0 10px #7c3aed;
 }
 
 /* ===== GRID ===== */
@@ -168,7 +174,7 @@ max-width:900px;
 margin:auto;
 }
 
-/* ===== CARD BASE ===== */
+/* ===== CARD ===== */
 .card{
 background:rgba(255,255,255,0.05);
 padding:12px;
@@ -179,7 +185,7 @@ text-align:center;
 position:relative;
 }
 
-/* ===== GOLD BORDER (CLUB HUB) ===== */
+/* GOLD BORDER */
 .quick-container .card::before{
 content:"";
 position:absolute;
@@ -194,7 +200,7 @@ linear-gradient(#000 0 0);
 mask-composite:exclude;
 }
 
-/* ===== BLUE BORDER (CHAMPIONS) ===== */
+/* BLUE BORDER */
 .champ-container .card::before{
 content:"";
 position:absolute;
@@ -232,7 +238,6 @@ margin:3px 0 2px;
 .champ p{
 font-size:10px;
 margin:0;
-line-height:1.2;
 color:#cbd5f5;
 }
 
@@ -269,12 +274,24 @@ color:#a78bfa;
 text-decoration:none;
 }
 
-.footer a:hover{
-text-shadow:0 0 10px #a78bfa;
+/* ===== MOBILE FIX (CENTER EVERYTHING) ===== */
+@media(max-width:600px){
+
+.navbar{
+flex-direction:column;
+align-items:center;
 }
 
-/* ===== MOBILE ===== */
-@media(max-width:600px){
+.logo{
+justify-content:center;
+width:100%;
+}
+
+.nav-links{
+justify-content:center;
+width:100%;
+}
+
 .hero{height:200px;}
 .logo span{font-size:14px;}
 .nav-links a{font-size:11px;padding:5px;}
@@ -324,10 +341,8 @@ text-shadow:0 0 10px #a78bfa;
 <h2 class="glow">JOIN WITH US</h2>
 </div>
 
-<!-- FOOTER -->
 <div class="footer">
-Design By 
-<a href="#" target="_blank">Md Rashedul Hasan</a>
+Design By <a href="https://www.facebook.com/mdrashedulhasan02/">Md Rashedul Hasan</a>
 </div>
 
 <script>
@@ -347,7 +362,6 @@ startAuto();
 
 function renderAds(){
 let hero=document.querySelector(".hero");
-
 hero.innerHTML+=ads.map((ad,i)=>`
 <div class="ad-box ${i==0?'active':''}">
 <img src="${ad.image}">
@@ -371,7 +385,6 @@ current=(current+dir+boxes.length)%boxes.length;
 boxes[current].classList.add("active");
 }
 
-/* LINKS */
 fetch(`https://opensheet.elk.sh/${sheetID}/LINKS`)
 .then(r=>r.json())
 .then(data=>{
@@ -384,7 +397,6 @@ data.map(l=>`
 `).join("");
 });
 
-/* CHAMPIONS */
 fetch(`https://opensheet.elk.sh/${sheetID}/CHAMPIONS`)
 .then(r=>r.json())
 .then(data=>{
@@ -398,14 +410,11 @@ data.map(c=>`
 `).join("");
 });
 
-/* SOCIAL */
 fetch(`https://opensheet.elk.sh/${sheetID}/SOCIAL`)
 .then(r=>r.json())
 .then(data=>{
 document.querySelector(".social").innerHTML+=
-data.map(s=>`
-<a href="${s.link}" target="_blank">${s.name}</a>
-`).join("");
+data.map(s=>`<a href="${s.link}" target="_blank">${s.name}</a>`).join("");
 });
 
 </script>
