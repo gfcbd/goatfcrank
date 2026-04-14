@@ -9,7 +9,6 @@
 
 <style>
 
-/* ===== GLOBAL FIX (MOBILE SAFE) ===== */
 *{box-sizing:border-box;}
 
 body{
@@ -20,7 +19,6 @@ color:white;
 overflow-x:hidden;
 }
 
-/* ===== NAVBAR FIX ===== */
 .navbar{
 display:flex;
 justify-content:space-between;
@@ -69,7 +67,6 @@ color:#a78bfa;
 text-shadow:0 0 10px #a78bfa;
 }
 
-/* ===== HERO ADS ===== */
 .hero{
 position:relative;
 height:240px;
@@ -95,7 +92,6 @@ object-fit:cover;
 filter:brightness(0.45);
 }
 
-/* AD TEXT FIX (SMALL + CENTER) */
 .ad-content{
 position:absolute;
 top:50%;
@@ -128,7 +124,6 @@ text-decoration:none;
 color:white;
 }
 
-/* ===== ARROW BUTTONS ===== */
 .arrow{
 position:absolute;
 top:50%;
@@ -146,13 +141,11 @@ border-radius:50%;
 .arrow.left{left:8px;}
 .arrow.right{right:8px;}
 
-/* ===== SECTION ===== */
 .section{
 text-align:center;
 padding:25px 10px;
 }
 
-/* ===== TITLE STYLE ===== */
 .section h2{
 margin-bottom:15px;
 font-size:16px;
@@ -163,7 +156,6 @@ color:#a78bfa;
 text-shadow:0 0 10px #7c3aed;
 }
 
-/* ===== GRID ===== */
 .grid{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
@@ -173,7 +165,6 @@ max-width:900px;
 margin:auto;
 }
 
-/* ===== CARD ===== */
 .card{
 background:rgba(255,255,255,0.05);
 padding:12px;
@@ -188,19 +179,29 @@ transform:scale(1.05);
 box-shadow:0 0 20px #8b5cf6;
 }
 
-/* ICON CENTER */
 .card h3,.card h4,.card p{
 margin:4px 0;
 text-align:center;
 }
 
-/* ===== CHAMP IMAGE ===== */
 .champ img{
 width:100%;
 border-radius:10px;
 }
 
-/* ===== DESCRIPTION ===== */
+/* ===== UPDATED WINNERS ZONE (SMALL + TIGHT) ===== */
+.champ h4{
+font-size:11px;
+margin:3px 0 2px 0;
+}
+
+.champ p{
+font-size:10px;
+margin:0;
+line-height:1.2;
+color:#cbd5f5;
+}
+
 .desc{
 max-width:700px;
 margin:10px auto;
@@ -209,7 +210,6 @@ color:#cbd5f5;
 line-height:1.5;
 }
 
-/* ===== SOCIAL ===== */
 .social a{
 display:inline-block;
 margin:5px;
@@ -221,7 +221,6 @@ color:white;
 text-decoration:none;
 }
 
-/* ===== MOBILE FIXES ===== */
 @media(max-width:600px){
 .hero{height:200px;}
 .logo span{font-size:14px;}
@@ -235,7 +234,6 @@ text-decoration:none;
 
 <body>
 
-<!-- NAVBAR -->
 <div class="navbar">
 
 <div class="logo">
@@ -252,21 +250,18 @@ text-decoration:none;
 
 </div>
 
-<!-- ADS -->
 <div class="hero">
 <button class="arrow left" onclick="changeSlide(-1)">‹</button>
 <button class="arrow right" onclick="changeSlide(1)">›</button>
 </div>
 
-<!-- CLUB ZONE -->
 <div class="section">
-<h2 class="glow">CLUB ZONE</h2>
+<h2 class="glow">⭐CLUB HUB⭐</h2>
 <div class="grid quick-container"></div>
 </div>
 
-<!-- WINNERS SECTION -->
 <div class="section" style="margin-top:-10px;">
-<h2 class="glow">WINNERS ZONE</h2>
+<h2 class="glow">🔥Hall of Champions🔥</h2>
 
 <div class="grid champ-container"></div>
 
@@ -275,7 +270,6 @@ text-decoration:none;
 </div>
 </div>
 
-<!-- SOCIAL -->
 <div class="section social">
 <h2 class="glow">JOIN WITH US</h2>
 </div>
@@ -287,7 +281,6 @@ const sheetID="1ZoXNHa5sYiP_HaPRyL5RDML7l3kC2IaGuQCAmYkERf8";
 let ads=[];
 let current=0;
 
-/* ===== ADS ===== */
 fetch(`https://opensheet.elk.sh/${sheetID}/ADS`)
 .then(r=>r.json())
 .then(data=>{
@@ -311,12 +304,10 @@ hero.innerHTML+=ads.map((ad,i)=>`
 `).join("");
 }
 
-/* AUTO SLIDE */
 function startAuto(){
 setInterval(()=>changeSlide(1),7000);
 }
 
-/* CHANGE SLIDE */
 function changeSlide(dir){
 let boxes=document.querySelectorAll(".ad-box");
 boxes[current].classList.remove("active");
@@ -326,7 +317,6 @@ current=(current+dir+boxes.length)%boxes.length;
 boxes[current].classList.add("active");
 }
 
-/* LINKS */
 fetch(`https://opensheet.elk.sh/${sheetID}/LINKS`)
 .then(r=>r.json())
 .then(data=>{
@@ -339,7 +329,6 @@ data.map(l=>`
 `).join("");
 });
 
-/* CHAMPIONS / WINNERS */
 fetch(`https://opensheet.elk.sh/${sheetID}/CHAMPIONS`)
 .then(r=>r.json())
 .then(data=>{
@@ -353,7 +342,6 @@ data.map(c=>`
 `).join("");
 });
 
-/* SOCIAL */
 fetch(`https://opensheet.elk.sh/${sheetID}/SOCIAL`)
 .then(r=>r.json())
 .then(data=>{
