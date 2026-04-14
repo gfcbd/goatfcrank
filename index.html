@@ -1,176 +1,347 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>GOAT FC LINEUP</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GOAT FC</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
 
 <style>
+
+/* ===== GLOBAL ===== */
 body{
 margin:0;
-font-family:'Oswald',sans-serif;
-background:#020617;
+font-family:'Orbitron',sans-serif;
+background:radial-gradient(circle at top,#020617,#0f172a);
 color:white;
-text-align:center;
+overflow-x:hidden;
 }
 
-.header{
-padding:15px;
-font-size:28px;
-color:#a3e635;
+/* ===== NAVBAR ===== */
+.navbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:12px 20px;
+background:rgba(15,23,42,0.8);
+backdrop-filter:blur(10px);
 }
 
-.field{
-width:850px;
-height:900px;
-margin:auto;
-background:linear-gradient(#3f6212,#65a30d);
-border-radius:20px;
+.logo{
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+.logo img{
+height:45px;
+filter:drop-shadow(0 0 10px #7c3aed);
+}
+
+.logo span{
+font-weight:700;
+font-size:22px;
+text-shadow:0 0 15px #8b5cf6;
+}
+
+.nav-links a{
+margin:10px;
+color:#cbd5f5;
+text-decoration:none;
+transition:.3s;
+}
+
+.nav-links a:hover{
+color:#a78bfa;
+text-shadow:0 0 10px #a78bfa;
+}
+
+/* ===== HERO SLIDER ===== */
+.hero{
 position:relative;
+height:320px;
+overflow:hidden;
 }
 
-/* PLAYER */
-.player{
+.ad-box{
 position:absolute;
+width:100%;
+height:100%;
+opacity:0;
+transition:all 1s ease;
+}
+
+.ad-box.active{
+opacity:1;
+transform:scale(1.05);
+}
+
+.ad-box img{
+width:100%;
+height:100%;
+object-fit:cover;
+filter:brightness(0.5);
+}
+
+.ad-content{
+position:absolute;
+top:50%;
+left:50%;
 transform:translate(-50%,-50%);
 text-align:center;
 }
 
-.circle{
-width:55px;
-height:55px;
-border-radius:50%;
+.glow{
+text-shadow:0 0 10px #8b5cf6,0 0 30px #7c3aed;
+}
+
+.btn{
+margin-top:10px;
+padding:10px 25px;
+background:linear-gradient(45deg,#7c3aed,#ec4899);
+border-radius:30px;
+color:white;
+text-decoration:none;
+}
+
+/* ===== SECTION ===== */
+.section{
+text-align:center;
+padding:40px 10px;
+}
+
+.section h2{
+margin-bottom:20px;
+text-shadow:0 0 15px #8b5cf6;
+}
+
+/* ===== GRID ===== */
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+gap:15px;
+max-width:900px;
+margin:auto;
+}
+
+/* ===== CARD ===== */
+.card{
+background:rgba(255,255,255,0.05);
+padding:20px;
+border-radius:15px;
+transition:.3s;
+cursor:pointer;
+position:relative;
 overflow:hidden;
-border:2px solid white;
 }
 
-.circle img{
-width:100%;
-height:100%;
-object-fit:cover;
-}
-
-.number{
+.card::before{
+content:"";
 position:absolute;
-top:-8px;
-right:-8px;
-background:#000;
-color:#fff;
-font-size:12px;
-padding:2px 6px;
+inset:0;
+background:linear-gradient(120deg,transparent,rgba(139,92,246,0.3),transparent);
+opacity:0;
+transition:.3s;
+}
+
+.card:hover::before{
+opacity:1;
+}
+
+.card:hover{
+transform:translateY(-8px) scale(1.05);
+box-shadow:0 0 25px #8b5cf6;
+}
+
+/* ===== CHAMP ===== */
+.champ img{
+width:100%;
 border-radius:10px;
+margin-bottom:8px;
 }
 
-.name{
-font-size:11px;
-margin-top:3px;
+/* ===== DESC ===== */
+.desc{
+max-width:700px;
+margin:20px auto;
+color:#cbd5f5;
+font-size:14px;
 }
 
-/* TEAM COLOR */
-.A .circle{ border-color:#38bdf8; }
-.B .circle{ border-color:#f97316; }
+/* ===== SOCIAL ===== */
+.social a{
+display:inline-block;
+margin:5px;
+padding:10px 15px;
+background:linear-gradient(45deg,#06b6d4,#3b82f6);
+border-radius:8px;
+text-decoration:none;
+color:white;
+transition:.3s;
+}
 
-/* POSITION */
-.A.GK{ top:90%; left:50%; }
-.A.CB{ top:75%; }
-.A.CB.left{ left:30%; }
-.A.CB.right{ left:70%; }
+.social a:hover{
+transform:scale(1.1);
+box-shadow:0 0 15px #06b6d4;
+}
 
-.A.CMF{ top:55%; }
-.A.CMF.left{ left:30%; }
-.A.CMF.right{ left:70%; }
-
-.A.CF{ top:25%; left:50%; }
-
-.B.GK{ top:10%; left:50%; }
-.B.CB{ top:25%; }
-.B.CB.left{ left:30%; }
-.B.CB.right{ left:70%; }
-
-.B.CMF{ top:45%; }
-.B.CMF.left{ left:30%; }
-.B.CMF.right{ left:70%; }
-
-.B.CF{ top:75%; left:50%; }
+/* ===== MOBILE ===== */
+@media(max-width:600px){
+.hero{height:230px;}
+}
 
 </style>
 </head>
 
 <body>
 
-<div class="header">GOAT FC LINEUP</div>
-<div class="field" id="field"></div>
+<!-- NAVBAR -->
+<div class="navbar">
+<div class="logo">
+<img src="https://i.imgur.com/LY3Bb9m.png">
+<span>GOAT FC</span>
+</div>
+
+<div class="nav-links">
+<a href="#">Rules</a>
+<a href="#">About</a>
+<a href="#">Contact</a>
+<a href="#">Login</a>
+</div>
+</div>
+
+<!-- HERO -->
+<div class="hero"></div>
+
+<!-- QUICK -->
+<div class="section">
+<h2>CLUB • ELITE • TOURNAMENT</h2>
+<div class="grid quick-container"></div>
+</div>
+
+<!-- CHAMPIONS -->
+<div class="section">
+<h2>CHAMPIONS</h2>
+<div class="grid champ-container"></div>
+
+<div class="desc">
+🏆 Legends are not born — they are made through victory.  
+Every champion here represents the highest level of skill and dedication.  
+Will you be the next name on this wall?
+</div>
+</div>
+
+<!-- SOCIAL -->
+<div class="section social">
+<h2>JOIN COMMUNITY</h2>
+</div>
 
 <script>
 
-// ✅ তোমার working CSV link
-const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS4KNzILRuiffmK9n0tOerjpaCJ6Y6MJ8-lW1IsJBefBkXWak_wW_88YEo7CazvuvxJZgD3SjEHlNu_/pub?gid=1301001241&single=true&output=csv";
+const sheetID="1ZoXNHa5sYiP_HaPRyL5RDML7l3kC2IaGuQCAmYkERf8";
 
-fetch(url)
-.then(res => res.text())
-.then(data => {
+/* ===== ADS ===== */
+let current=0;
+let ads=[];
 
-  const rows = data.split("\n").slice(1);
-
-  let countA = {};
-  let countB = {};
-
-  rows.forEach(row => {
-
-    const col = row.split(",");
-
-    const name = col[0];
-    const status = col[3];
-    const image = col[6];
-    const manage = col[8];
-    const position = col[10];
-    const lineup = col[12];
-    const teamCode = col[13];
-    const number = col[14];
-
-    if(lineup !== "Yes") return;
-    if(status !== "Available") return;
-    if(manage !== "YES") return;
-
-    let side = teamCode === "A" ? "A" : "B";
-
-    let posIndex;
-    if(side === "A"){
-      countA[position] = (countA[position] || 0) + 1;
-      posIndex = countA[position];
-    }else{
-      countB[position] = (countB[position] || 0) + 1;
-      posIndex = countB[position];
-    }
-
-    let extra = posIndex === 1 ? "left" : "right";
-
-    // 🔥 IMAGE FIX
-    let img = "";
-    if(image.includes("drive.google.com")){
-      let id = image.split("/d/")[1].split("/")[0];
-      img = "https://drive.google.com/uc?export=view&id=" + id;
-    }else{
-      img = image;
-    }
-
-    const div = document.createElement("div");
-    div.className = `player ${side} ${position} ${extra}`;
-
-    div.innerHTML = `
-      <div class="circle">
-        <img src="${img}">
-      </div>
-      <div class="number">${number}</div>
-      <div class="name">${name}</div>
-    `;
-
-    document.getElementById("field").appendChild(div);
-
-  });
-
+fetch(`https://opensheet.elk.sh/${sheetID}/ADS`)
+.then(res=>res.json())
+.then(data=>{
+ads=data;
+renderAds();
 });
+
+function renderAds(){
+let hero=document.querySelector(".hero");
+hero.innerHTML=ads.map((ad,i)=>`
+<div class="ad-box ${i==0?'active':''}">
+<img src="${ad.image}">
+<div class="ad-content">
+<h1 class="glow">${ad.title}</h1>
+<p>${ad.desc}</p>
+<a href="${ad.link}" class="btn">${ad.button}</a>
+</div>
+</div>`).join("");
+
+startSlider();
+addDrag();
+}
+
+/* AUTO SLIDE */
+function startSlider(){
+setInterval(()=>{
+changeSlide(1);
+},6500);
+}
+
+/* CHANGE */
+function changeSlide(dir){
+let boxes=document.querySelectorAll(".ad-box");
+boxes[current].classList.remove("active");
+current=(current+dir+boxes.length)%boxes.length;
+boxes[current].classList.add("active");
+}
+
+/* DRAG CONTROL */
+function addDrag(){
+let startX=0;
+
+document.querySelector(".hero").addEventListener("mousedown",(e)=>{
+startX=e.clientX;
+});
+
+document.querySelector(".hero").addEventListener("mouseup",(e)=>{
+let diff=e.clientX-startX;
+if(diff>50) changeSlide(-1);
+if(diff<-50) changeSlide(1);
+});
+
+/* MOBILE TOUCH */
+document.querySelector(".hero").addEventListener("touchstart",(e)=>{
+startX=e.touches[0].clientX;
+});
+
+document.querySelector(".hero").addEventListener("touchend",(e)=>{
+let diff=e.changedTouches[0].clientX-startX;
+if(diff>50) changeSlide(-1);
+if(diff<-50) changeSlide(1);
+});
+}
+
+/* LINKS */
+fetch(`https://opensheet.elk.sh/${sheetID}/LINKS`)
+.then(res=>res.json())
+.then(data=>{
+document.querySelector(".quick-container").innerHTML=
+data.map(l=>`
+<div class="card" onclick="window.location='${l.link}'">
+<h3>${l.icon}</h3>
+<p>${l.title}</p>
+</div>`).join("");
+});
+
+/* CHAMPIONS */
+fetch(`https://opensheet.elk.sh/${sheetID}/CHAMPIONS`)
+.then(res=>res.json())
+.then(data=>{
+document.querySelector(".champ-container").innerHTML=
+data.map(c=>`
+<div class="card champ">
+<img src="${c.image}">
+<h4>${c.title}</h4>
+<p>${c.subtitle}</p>
+</div>`).join("");
+});
+
+/* SOCIAL */
+fetch(`https://opensheet.elk.sh/${sheetID}/SOCIAL`)
+.then(res=>res.json())
+.then(data=>{
+document.querySelector(".social").innerHTML+=
+data.map(s=>`<a href="${s.link}" target="_blank">${s.name}</a>`).join("");
+});
+
 </script>
 
 </body>
