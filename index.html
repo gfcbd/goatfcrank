@@ -5,124 +5,298 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GOAT FC</title>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
 
 <style>
 
-/* GLOBAL */
-body {
-  margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background: #020617;
-  color: white;
+*{box-sizing:border-box;}
+
+body{
+margin:0;
+font-family:'Orbitron',sans-serif;
+background:radial-gradient(circle at top,#020617,#0f172a);
+color:white;
+overflow-x:hidden;
 }
 
-/* HEADER */
-.header {
-  position: sticky;
-  top: 0;
-  backdrop-filter: blur(10px);
-  background: rgba(2,6,23,0.7);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  padding: 8px 0;
-  z-index: 1000;
+/* ===== NAVBAR ===== */
+.navbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:10px 12px;
+flex-wrap:wrap;
+background:rgba(15,23,42,0.85);
+backdrop-filter:blur(10px);
 }
 
-.header img {
-  height: 32px;
-  transition: 0.3s;
+.logo{
+display:flex;
+align-items:center;
+gap:8px;
+min-width:160px;
 }
 
-.header img:hover {
-  transform: rotate(8deg) scale(1.1);
+.logo img{
+height:38px;
+filter:drop-shadow(0 0 10px #7c3aed);
 }
 
-.header h1 {
-  font-size: 20px;
-  margin: 0;
-  background: linear-gradient(90deg, #22c55e, #38bdf8);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: glow 3s infinite alternate;
+.logo span{
+font-size:16px;
+font-weight:700;
+white-space:nowrap;
 }
 
-@keyframes glow {
-  from { filter: drop-shadow(0 0 2px #22c55e); }
-  to { filter: drop-shadow(0 0 8px #38bdf8); }
+.nav-links{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:8px;
 }
 
-/* MAIN */
-.main {
-  width: 100%;
-  height: calc(100vh - 100px);
+.nav-links a{
+font-size:12px;
+padding:6px 8px;
+color:#cbd5f5;
+text-decoration:none;
+white-space:nowrap;
 }
 
-iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
+.nav-links a:hover{
+color:#a78bfa;
+text-shadow:0 0 10px #a78bfa;
 }
 
-/* FOOTER */
-.footer {
-  position: fixed;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 95%;
-  max-width: 500px;
-  background: rgba(15,23,42,0.7);
-  backdrop-filter: blur(12px);
-  border-radius: 20px;
-  display: flex;
-  justify-content: space-around;
-  padding: 8px 0;
-  box-shadow: 0 0 20px rgba(0,0,0,0.4);
+/* ===== HERO ===== */
+.hero{
+position:relative;
+height:240px;
+overflow:hidden;
 }
 
-.footer a {
-  text-decoration: none;
-  color: #cbd5f5;
-  font-size: 11px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  transition: 0.3s;
+.ad-box{
+position:absolute;
+width:100%;
+height:100%;
+opacity:0;
+transition:all 0.8s ease;
 }
 
-.footer i {
-  font-size: 18px;
-  margin-bottom: 2px;
-  transition: 0.3s;
+.ad-box.active{opacity:1;}
+
+.ad-box img{
+width:100%;
+height:100%;
+object-fit:cover;
+filter:brightness(0.45);
 }
 
-/* HOVER EFFECT */
-.footer a:hover {
-  color: #38bdf8;
-  transform: translateY(-3px);
+.ad-content{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+text-align:center;
+width:90%;
 }
 
-.footer a:hover i {
-  transform: scale(1.2);
-  text-shadow: 0 0 10px #38bdf8;
+.ad-content h1{
+font-size:18px;
+margin:4px 0;
+text-shadow:0 0 10px #8b5cf6;
 }
 
-/* ACTIVE CLICK */
-.footer a:active {
-  transform: scale(0.9);
+.ad-content p{
+font-size:12px;
+margin:5px 0;
+color:#cbd5f5;
 }
 
-/* MOBILE FIX */
-@media (max-width: 500px) {
-  .header h1 {
-    font-size: 18px;
-  }
-  .header img {
-    height: 28px;
-  }
+.btn{
+display:inline-block;
+margin-top:6px;
+padding:7px 16px;
+font-size:12px;
+background:linear-gradient(45deg,#7c3aed,#ec4899);
+border-radius:25px;
+text-decoration:none;
+color:white;
+}
+
+/* ===== ARROWS ===== */
+.arrow{
+position:absolute;
+top:50%;
+transform:translateY(-50%);
+background:rgba(0,0,0,0.4);
+border:none;
+color:white;
+font-size:18px;
+padding:6px 10px;
+cursor:pointer;
+z-index:10;
+border-radius:50%;
+}
+
+.arrow.left{left:8px;}
+.arrow.right{right:8px;}
+
+/* ===== SECTION ===== */
+.section{
+text-align:center;
+padding:25px 10px;
+}
+
+/* ===== TITLE ANIMATION ===== */
+.section h2{
+margin-bottom:15px;
+font-size:16px;
+animation:glowPulse 2.5s infinite alternate;
+}
+
+@keyframes glowPulse{
+0%{text-shadow:0 0 5px #7c3aed;}
+100%{text-shadow:0 0 20px #a78bfa;}
+}
+
+.glow{
+color:#a78bfa;
+}
+
+/* ===== GRID ===== */
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+gap:10px;
+padding:0 10px;
+max-width:900px;
+margin:auto;
+}
+
+/* ===== CARD ===== */
+.card{
+background:rgba(255,255,255,0.05);
+padding:12px;
+border-radius:12px;
+transition:.3s;
+cursor:pointer;
+text-align:center;
+position:relative;
+}
+
+/* GOLD BORDER */
+.quick-container .card::before{
+content:"";
+position:absolute;
+inset:0;
+border-radius:12px;
+padding:1px;
+background:linear-gradient(45deg,#FFD700,#FFA500);
+-webkit-mask:
+linear-gradient(#000 0 0) content-box,
+linear-gradient(#000 0 0);
+-webkit-mask-composite:xor;
+mask-composite:exclude;
+}
+
+/* BLUE BORDER */
+.champ-container .card::before{
+content:"";
+position:absolute;
+inset:0;
+border-radius:12px;
+padding:1px;
+background:linear-gradient(45deg,#38bdf8,#6366f1);
+-webkit-mask:
+linear-gradient(#000 0 0) content-box,
+linear-gradient(#000 0 0);
+-webkit-mask-composite:xor;
+mask-composite:exclude;
+}
+
+.card:hover{
+transform:scale(1.05);
+box-shadow:0 0 20px #8b5cf6;
+}
+
+.card h3,.card h4,.card p{
+margin:4px 0;
+text-align:center;
+}
+
+.champ img{
+width:100%;
+border-radius:10px;
+}
+
+.champ h4{
+font-size:11px;
+margin:3px 0 2px;
+}
+
+.champ p{
+font-size:10px;
+margin:0;
+color:#cbd5f5;
+}
+
+.desc{
+max-width:700px;
+margin:10px auto;
+font-size:12px;
+color:#cbd5f5;
+}
+
+/* ===== SOCIAL ===== */
+.social a{
+display:inline-block;
+margin:5px;
+padding:8px 12px;
+font-size:12px;
+background:linear-gradient(45deg,#06b6d4,#3b82f6);
+border-radius:8px;
+color:white;
+text-decoration:none;
+}
+
+/* ===== FOOTER ===== */
+.footer{
+text-align:center;
+padding:15px;
+font-size:12px;
+color:#94a3b8;
+border-top:1px solid rgba(255,255,255,0.1);
+}
+
+.footer a{
+color:#a78bfa;
+text-decoration:none;
+}
+
+/* ===== MOBILE FIX (CENTER EVERYTHING) ===== */
+@media(max-width:600px){
+
+.navbar{
+flex-direction:column;
+align-items:center;
+}
+
+.logo{
+justify-content:center;
+width:100%;
+}
+
+.nav-links{
+justify-content:center;
+width:100%;
+}
+
+.hero{height:200px;}
+.logo span{font-size:14px;}
+.nav-links a{font-size:11px;padding:5px;}
+.ad-content h1{font-size:15px;}
+.ad-content p{font-size:11px;}
 }
 
 </style>
@@ -130,50 +304,118 @@ iframe {
 
 <body>
 
-<!-- HEADER -->
-<div class="header">
-  <img src="https://i.imgur.com/LY3Bb9m.png">
-  <h1>GOAT FC</h1>
+<div class="navbar">
+<div class="logo">
+<img src="https://i.imgur.com/LY3Bb9m.png">
+<span>GOAT FC</span>
 </div>
 
-<!-- MAIN -->
-<div class="main">
-  <iframe id="mainFrame"></iframe>
+<div class="nav-links">
+<a href="https://docs.google.com/document/d/1T7p7AjuFfk-DtVbJgdGFcwsH0ipDfG3wg05qv8Y0fJ4/edit?usp=sharing">Club Rules</a>
+<a href="https://www.facebook.com/groups/goatfc.official">About</a>
+<a href="https://www.facebook.com/goatfc.official">Contact</a>
+<a href="https://forms.gle/HnRQHSFgwpQXc81F9">Registration</a>
+</div>
 </div>
 
-<!-- FOOTER -->
+<div class="hero">
+<button class="arrow left" onclick="changeSlide(-1)">‹</button>
+<button class="arrow right" onclick="changeSlide(1)">›</button>
+</div>
+
+<div class="section">
+<h2 class="glow">Club Hub</h2>
+<div class="grid quick-container"></div>
+</div>
+
+<div class="section" style="margin-top:-10px;">
+<h2 class="glow">Hall of Champions</h2>
+<div class="grid champ-container"></div>
+
+<div class="desc">
+🏆 This zone represents champions, top scorers, and elite performers of Goat FC.
+</div>
+</div>
+
+<div class="section social">
+<h2 class="glow">JOIN WITH US</h2>
+</div>
+
 <div class="footer">
-  <a id="home"><i class="fas fa-home"></i>Home</a>
-  <a id="register"><i class="fas fa-user-plus"></i>Register</a>
-  <a id="score"><i class="fas fa-trophy"></i>Score</a>
-  <a id="submit"><i class="fas fa-paper-plane"></i>Submit</a>
+Design By <a href="https://www.facebook.com/mdrashedulhasan02/">Md Rashedul Hasan</a>
 </div>
 
 <script>
 
-// GOOGLE SHEET LINK
-const sheetURL = "https://opensheet.elk.sh/1ZoXNHa5sYiP_HaPRyL5RDML7l3kC2IaGuQCAmYkERf8/CONFIG";
+const sheetID="1ZoXNHa5sYiP_HaPRyL5RDML7l3kC2IaGuQCAmYkERf8";
 
-fetch(sheetURL)
-.then(res => res.json())
-.then(data => {
+let ads=[];
+let current=0;
 
-  let config = {};
-  data.forEach(row => {
-    config[row.key] = row.value;
-  });
+fetch(`https://opensheet.elk.sh/${sheetID}/ADS`)
+.then(r=>r.json())
+.then(data=>{
+ads=data;
+renderAds();
+startAuto();
+});
 
-  // MAIN FRAME
-  document.getElementById("mainFrame").src = config.main_link;
+function renderAds(){
+let hero=document.querySelector(".hero");
+hero.innerHTML+=ads.map((ad,i)=>`
+<div class="ad-box ${i==0?'active':''}">
+<img src="${ad.image}">
+<div class="ad-content">
+<h1>${ad.title}</h1>
+<p>${ad.desc}</p>
+<a class="btn" href="${ad.link}">${ad.button}</a>
+</div>
+</div>
+`).join("");
+}
 
-  // FOOTER LINKS
-  document.getElementById("home").href = config.home_link;
-  document.getElementById("register").href = config.register_link;
-  document.getElementById("score").href = config.score_link;
-  document.getElementById("submit").href = config.submit_link;
+function startAuto(){
+setInterval(()=>changeSlide(1),7000);
+}
 
-})
-.catch(err => console.error(err));
+function changeSlide(dir){
+let boxes=document.querySelectorAll(".ad-box");
+boxes[current].classList.remove("active");
+current=(current+dir+boxes.length)%boxes.length;
+boxes[current].classList.add("active");
+}
+
+fetch(`https://opensheet.elk.sh/${sheetID}/LINKS`)
+.then(r=>r.json())
+.then(data=>{
+document.querySelector(".quick-container").innerHTML=
+data.map(l=>`
+<div class="card" onclick="window.location='${l.link}'">
+<h3>${l.icon}</h3>
+<h4>${l.title}</h4>
+</div>
+`).join("");
+});
+
+fetch(`https://opensheet.elk.sh/${sheetID}/CHAMPIONS`)
+.then(r=>r.json())
+.then(data=>{
+document.querySelector(".champ-container").innerHTML=
+data.map(c=>`
+<div class="card champ">
+<img src="${c.image}">
+<h4>${c.title}</h4>
+<p>${c.subtitle}</p>
+</div>
+`).join("");
+});
+
+fetch(`https://opensheet.elk.sh/${sheetID}/SOCIAL`)
+.then(r=>r.json())
+.then(data=>{
+document.querySelector(".social").innerHTML+=
+data.map(s=>`<a href="${s.link}" target="_blank">${s.name}</a>`).join("");
+});
 
 </script>
 
