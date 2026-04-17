@@ -93,12 +93,17 @@ filter:brightness(0.45);
 }
 
 .ad-content{
+z-index:5;
 position:absolute;
 top:50%;
 left:50%;
 transform:translate(-50%,-50%);
 text-align:center;
 width:90%;
+}
+
+.arrow{
+z-index:10;
 }
 
 .ad-content h1{
@@ -362,13 +367,19 @@ startAuto();
 
 function renderAds(){
 let hero=document.querySelector(".hero");
-hero.innerHTML+=ads.map((ad,i)=>`
+
+hero.innerHTML = `
+<button class="arrow left" onclick="changeSlide(-1)">‹</button>
+<button class="arrow right" onclick="changeSlide(1)">›</button>
+`;
+
+hero.innerHTML += ads.map((ad,i)=>`
 <div class="ad-box ${i==0?'active':''}">
 <img src="${ad.image}">
 <div class="ad-content">
 <h1>${ad.title}</h1>
 <p>${ad.desc}</p>
-<a class="btn" href="${ad.link}">${ad.button}</a>
+<a class="btn" href="${ad.link}" target="_blank">${ad.button}</a>
 </div>
 </div>
 `).join("");
